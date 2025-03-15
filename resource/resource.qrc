@@ -1,0 +1,60 @@
+<RCC>
+    <qresource prefix="/yolo">
+        <file>images/background.jpg</file>
+
+        <file>images/icons/yolo.png</file>
+        <file>images/icons/home.png</file>
+        <file>images/icons/yolo2.png</file>
+        <file>images/icons/table.png</file>
+        <file>images/icons/chart.png</file>
+
+        <file>images/icons/vision.png</file>
+        <file>images/icons/document.png</file>
+        <file>images/icons/file.png</file>
+        <file>images/icons/folder.png</file>
+        <file>images/icons/image.png</file>
+        <file>images/icons/video.png</file>
+        <file>images/icons/camera.png</file>
+        <file>images/icons/private-wall-mount-camera.png</file>
+
+        <file>images/icons/detection.png</file>
+        <file>images/icons/classify.png</file>
+        <file>images/icons/segment.png</file>
+        <file>images/icons/track.png</file>
+        <file>images/icons/pose.png</file>
+
+        <file>images/icons/detection-2.png</file>
+        <file>images/icons/classify-2.png</file>
+        <file>images/icons/segment-2.png</file>
+        <file>images/icons/track-2.png</file>
+        <file>images/icons/pose-2.png</file>
+
+        <file>images/icons/circled-play.png</file>
+        <file>images/icons/pause-button.png</file>
+        <file>images/icons/stop-circled.png</file>
+        <file>images/icons/menu.png</file>
+
+        <file>images/icons/save.png</file>
+        <file>images/icons/delay.png</file>
+        <file>images/icons/conf.png</file>
+        <file>images/icons/iou.png</file>
+        <file>images/icons/model.png</file>
+
+
+        <file>qss/dark/type_card.qss</file>
+        <file>qss/dark/widget_home.qss</file>
+        <file>qss/dark/widget_table.qss</file>
+        <file>qss/dark/widget_detect.qss</file>
+        <file>qss/dark/widget_chart.qss</file>
+
+        <file>qss/light/type_card.qss</file>
+        <file>qss/light/widget_home.qss</file>
+        <file>qss/light/widget_table.qss</file>
+        <file>qss/light/widget_detect.qss</file>
+        <file>qss/light/widget_chart.qss</file>
+
+        <file>i18n/gallery.zh_CN.qm</file>
+        <file>i18n/gallery.zh_HK.qm</file>
+
+    </qresource>
+</RCC>

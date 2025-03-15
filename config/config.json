@@ -1,0 +1,22 @@
+{
+    "Yolo": {
+        "conf": 0.71,
+        "delay": 19,
+        "iou": 0.41,
+        "ip": "rtsp://admin:admin888@192.168.1.2:555",
+        "save": true,
+        "open_fold": "E:/Python/Projects/yolo/YOLO_GUI/image_test",
+        "save_path": "E:/Python/Projects/yolo/YOLO_GUI/save_dir"
+    },
+    "User": {
+        "password": "",
+        "user": ""
+    },
+    "MainWindow": {
+        "save_password": true
+    },
+    "QFluentWidgets": {
+        "ThemeColor": "#ff28afe9",
+        "ThemeMode": "Light"
+    }
+}
