@@ -5,7 +5,7 @@
         "iou": 0.41,
         "ip": "rtsp://admin:admin888@192.168.1.2:555",
         "save": true,
-        "open_fold": "E:/Python/Projects/yolo/YOLO_GUI/image_test",
+        "open_fold": "E:/Python/projects_2025/YOLO/YOLO_YUJIA/image_test",
         "save_path": "E:/Python/Projects/yolo/YOLO_GUI/save_dir"
     },
     "User": {

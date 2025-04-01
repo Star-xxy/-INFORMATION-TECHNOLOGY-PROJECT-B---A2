@@ -105,7 +105,7 @@ class YoloPredictor(BasePredictor, QObject):
             if self.args.verbose:
                 LOGGER.info('')
             # Setup model
-            self.yolo2main_status_msg.emit('模型载入中...')
+            # self.yolo2main_status_msg.emit('模型载入中...')
 
             if self.task == TASK.track:
                 track_model = YOLO(self.new_model_name)
@@ -142,7 +142,7 @@ class YoloPredictor(BasePredictor, QObject):
                     # for self.batch in self.dataset:
                     # 在中途更改模型
                     if self.used_model_name != self.new_model_name:
-                        self.yolo2main_status_msg.emit('更换模型...')
+                        # self.yolo2main_status_msg.emit('更换模型...')
                         if self.task == TASK.track:
                             track_model = YOLO(self.new_model_name)
                         self.setup_model(self.new_model_name)
@@ -158,7 +158,7 @@ class YoloPredictor(BasePredictor, QObject):
                         except StopIteration:
                             break
                         self.batch = batch
-                        self.yolo2main_status_msg.emit('检测中...')
+                        # self.yolo2main_status_msg.emit('检测中...')
                         paths, im0s, s = self.batch
                         t = time.time()
                         # Preprocess
@@ -203,30 +203,20 @@ class YoloPredictor(BasePredictor, QObject):
                             if 'no detections' in s:
                                 self.im = im0
 
-                            if isinstance(self.frame, int) and (
-                                    not isinstance(self.frames, list) and self.frames is not None):
-                                self.progress_value = int(self.frame / self.frames * 1000)
-                            elif not self.source or self.frames is None or self.frame is None:
-                                # self.frame = 0
-                                # self.frames = 1
-                                self.progress_value = int(1000)
+                            # if isinstance(self.frame, int) and (
+                            #         not isinstance(self.frames, list) and self.frames is not None):
+                            #     self.progress_value = int(self.frame / self.frames * 1000)
+                            # elif not self.source or self.frames is None or self.frame is None:
+                            #     # self.frame = 0
+                            #     # self.frames = 1
+                            #     self.progress_value = int(1000)
                             # 发送测试结果
                             self.yolo2main_pre_img.emit(im0 if isinstance(im0, np.ndarray) else im0[0])  # 检测前
                             self.yolo2main_res_img.emit(self.im)  # 检测后
-                            self.results_info = {'检测结果': self.results[i].verbose()}
-                            self.results_info['结果表格'] = self.results[i].to_df()
-
-                            if self.task != TASK.classify:
-                                self.results_info['类别数量'] = str(self.class_nums)
-                                self.results_info['目标数量'] = str(self.target_nums)
-                                # self.yolo2main_class_num.emit(self.class_nums)
-                                # self.yolo2main_target_num.emit(self.target_nums)
-                            if not isinstance(self.frames, list) and self.frames is not None:
-                                self.results_info['fps'] = str(self.fps)
-                            self.yolo2main_result.emit(self.results_info)
                             if self.speed_thres != 0:
                                 time.sleep(self.speed_thres / 1000)  # 延迟，毫秒
-                        self.yolo2main_progress.emit(self.progress_value)  # 进度条
+                        # self.yolo2main_progress.emit(self.progress_value)  # 进度条 有bug
+                        # time.sleep(0.15)
                     else:
                         time.sleep(0.5)
 
@@ -234,7 +224,7 @@ class YoloPredictor(BasePredictor, QObject):
                         for v in self.vid_writer.values():
                             if isinstance(v, cv2.VideoWriter):
                                 v.release()
-                        self.yolo2main_status_msg.emit('检测完成')
+                        # self.yolo2main_status_msg.emit('检测完成')
                         self.yolo2main_stop.emit()
                         if self.source == 0:
                             self.dataset.close()
@@ -245,12 +235,11 @@ class YoloPredictor(BasePredictor, QObject):
                         for v in self.vid_writer.values():
                             if isinstance(v, cv2.VideoWriter):
                                 v.release()
-                        self.yolo2main_status_msg.emit('检测终止')
+                        # self.yolo2main_status_msg.emit('检测终止')
                         self.yolo2main_stop.emit()
                         if self.source == 0:
                             self.dataset.close()
                         break
-
                     # Print final results
                     if self.args.verbose and self.seen:
                         t = tuple(x.t / self.seen * 1e3 for x in profilers)  # speeds per image
@@ -259,15 +248,14 @@ class YoloPredictor(BasePredictor, QObject):
                     #     nl = len(list(self.save_dir.glob("labels/*.txt")))  # number of labels
                     #     s = f"\n{nl} label{'s' * (nl > 1)} saved to {self.save_dir / 'labels'}" if self.save_txt else ""
                 if not self.source_type.stream and self.frames is None or self.frame is None:
-                    self.yolo2main_status_msg.emit('检测完成')
+                    # self.yolo2main_status_msg.emit('检测完成')
                     self.yolo2main_stop.emit()
                     if self.source == 0:
                         self.dataset.close()
         except Exception as e:
-            pass
             traceback.print_exc()
             print(f"Error: {e}")
-            self.yolo2main_status_msg.emit('%s' % e)
+            # self.yolo2main_status_msg.emit('%s' % e)
 
     def inference(self, im, *args, **kwargs):
         """Runs inference on a given image using the specified model and arguments."""
