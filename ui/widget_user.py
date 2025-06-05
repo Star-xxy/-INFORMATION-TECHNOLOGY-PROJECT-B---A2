@@ -13,7 +13,7 @@ from PySide6.QtWidgets import QApplication, QStackedWidget, QHBoxLayout, QWidget
 from qfluentwidgets import (NavigationInterface, NavigationItemPosition, MessageBox, isDarkTheme, setThemeColor)
 from ui.dialog_modify import WidgetInfoModify  # 引入修改界面
 from utils.chart import BarChart, LineChart
-from utils.database import Database  # 引入数据库操作
+from utils.database import *  # 引入数据库操作
 
 from ui.user import Ui_Frame as UI_user
 from utils.style_sheet import StyleSheet
@@ -24,11 +24,9 @@ class WidgetUser(QFrame, UI_user):
         super().__init__(parent=parent)
         self.setObjectName(name)
         self.setupUi(self)
-        self.db = Database()  # 初始化数据库
+        self.db = Database(DB_HOST, DB_NAME, DB_USER, DB_PASSWORD)
         self.init_connections()
         self.user_info = None  # 保存用户信息
-
-
 
         self.start_date.setDate(QDate(2024, 1, 1))
         self.end_date.setDate(QDate(2030, 1, 1))
@@ -40,6 +38,16 @@ class WidgetUser(QFrame, UI_user):
         self.ComboBox_4.addItem('By week')
         self.ComboBox_4.addItem('By month')
 
+        self.PushButton.clicked.connect(self.report_week)
+        self.PushButton_2.clicked.connect(self.report_month)
+
+
+    def report_week(self):
+        self.BodyLabel_13.setText('From April 7 to April 13, 2025, I completed four yoga sessions focused on flexibility, balance, and breathwork. Vinyasa and Hatha styles were practiced, with noticeable progress in hamstring flexibility and pose stability. A minor wrist strain occurred during one session, highlighting the need for careful alignment in weight-bearing poses. Next week, I plan to include a restorative session and work more on core strength.')
+
+
+    def report_month(self):
+        self.BodyLabel_13.setText('Between March 16 and April 15, 2025, I maintained a consistent yoga routine with 16 sessions in total, improving flexibility, core strength, and breathing control. Highlights include holding Crow Pose, improved focus in meditative breathing, and steady practice habits. Challenges involved wrist discomfort and backbend transitions. Next month, I aim to join a weekly group class and begin learning more advanced poses like Headstand.')
 
     def aggregate_by_week(self, dates, counts_by_category):
         """

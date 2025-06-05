@@ -15,6 +15,9 @@ from qframelesswindow import FramelessWindow, StandardTitleBar
 from config.config import AUTHOR, FEEDBACK_URL, VERSION
 from ui.widget_analyze import WidgetAnalyze
 from ui.widget_user import WidgetUser
+from ui.widget_post_all import WidgetPostAll
+from ui.widget_class import WidgetClass
+
 from resource import resource_rc
 
 # def isWin11():
@@ -35,6 +38,8 @@ class Window(MSFluentWindow):
         # create sub interface
         self.analyzeInterface = WidgetAnalyze('home', self)
         self.userInterface = WidgetUser('detect', self)
+        self.postsInterface = WidgetPostAll('posts', self)
+        self.classesInterface = WidgetClass('classes', self)
         # self.__init_layout()
         self.__init__navigation()
         self.__init__window()
@@ -49,8 +54,10 @@ class Window(MSFluentWindow):
     def __init__navigation(self):
         # enable acrylic effect
 
-        self.addSubInterface(self.analyzeInterface, QIcon(':/yolo/images/icons/home.png'), '主页',)
-        self.addSubInterface(self.userInterface, QIcon(':/yolo/images/icons/vision.png'), '用户',)
+        self.addSubInterface(self.analyzeInterface, QIcon(':/yolo/images/icons/home.png'), 'Home',)
+        self.addSubInterface(self.userInterface, QIcon(':/yolo/images/icons/vision.png'), 'User',)
+        self.addSubInterface(self.postsInterface, QIcon(':/yolo/images/icons/model.png'), 'Social',)
+        self.addSubInterface(self.classesInterface, QIcon(':/yolo/images/icons/classify.png'), 'Class',)
 
     def __init__window(self):
 

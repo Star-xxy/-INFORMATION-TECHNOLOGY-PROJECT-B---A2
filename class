@@ -1,0 +1,8 @@
+// Class Diagram
+digraph {
+	User [label="User\n- user_id\n- email\n+ register()\n+ login()"]
+	Analyzer [label="PoseAnalyzer\n- model_path\n+ analyze_photo()\n+ compare_poses()"]
+	Media [label="Media\n- file_path\n+ save_file()"]
+	User -> Analyzer [label=uses]
+	Analyzer -> Media [label=processes]
+}

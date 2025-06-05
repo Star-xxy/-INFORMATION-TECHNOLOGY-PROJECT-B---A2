@@ -10,7 +10,7 @@ from PySide6.QtWidgets import QApplication, QStackedWidget, QHBoxLayout, QWidget
 from qfluentwidgets import (NavigationInterface, NavigationItemPosition, MessageBox, isDarkTheme, setThemeColor)
 from ui.modify import Ui_Dialog as UI_info
 from utils.style_sheet import StyleSheet
-from utils.database import Database  # 引入数据库操作
+from utils.database import *
 
 
 class WidgetInfoModify(QDialog, UI_info):
@@ -20,7 +20,7 @@ class WidgetInfoModify(QDialog, UI_info):
         self.user_info = user_info  # 保存传入的用户信息
         self.updated_info = {}  # 保存修改后的信息
         self.setupUi(self)
-        self.db = Database()  # 初始化数据库
+        self.db = Database(DB_HOST, DB_NAME, DB_USER, DB_PASSWORD)
         self.init_ui()
         self.init_connections()
 
@@ -60,11 +60,12 @@ class WidgetInfoModify(QDialog, UI_info):
         # 更新用户信息到数据库
         try:
             with self.db.lock:
+                print(username, mail, int(age), float(weight), self.user_info.get('username'))
                 cursor = self.db.conn.cursor()
                 cursor.execute('''
-                    UPDATE users 
-                    SET username = ?, mail = ?, age = ?, weight = ?
-                    WHERE username = ?
+                    UPDATE users
+                    SET username = %s, mail = %s, age = %s, weight = %s
+                    WHERE username = %s
                 ''', (username, mail, int(age), float(weight), self.user_info.get('username')))
                 self.db.conn.commit()
                 cursor.close()

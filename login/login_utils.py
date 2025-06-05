@@ -26,7 +26,7 @@ def show_dialog(parent, content, title='提示', callback=None):
     w.windowTitleLabel.hide()
     if not callback:
         w.yesButton.hide()
-        w.cancelButton.setText('确定')
+        w.cancelButton.setText('Confirm')
         w.buttonLayout.insertWidget(0, QLabel(''))
         w.buttonLayout.setStretch(0, 1)
         w.buttonLayout.setStretch(1, 1)

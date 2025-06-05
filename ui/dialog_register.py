@@ -4,7 +4,7 @@ from PySide6.QtCore import Signal  # 添加 Signal 支持
 from PySide6.QtWidgets import QApplication, QDialog
 from qfluentwidgets import MessageBox
 from ui.register import Ui_Dialog as UI_info
-from utils.database import Database
+from utils.database import *
 
 
 class WidgetRegister(QDialog, UI_info):
@@ -15,7 +15,7 @@ class WidgetRegister(QDialog, UI_info):
         super().__init__(parent=parent)
         self.setObjectName(name)
         self.setupUi(self)
-        self.db = Database()
+        self.db = Database(DB_HOST, DB_NAME, DB_USER, DB_PASSWORD)
 
         # Connect buttons
         self.PrimaryPushButton.clicked.connect(self.register)
@@ -23,7 +23,7 @@ class WidgetRegister(QDialog, UI_info):
 
     def show_dialog(self, message):
         w = MessageBox(
-            title="提示",
+            title="hint",
             content=message,
             parent=self
         )
@@ -48,11 +48,11 @@ class WidgetRegister(QDialog, UI_info):
 
         # Try to register user
         if self.db.register_user(username, password, mail, age, weight):
-            self.show_dialog("注册成功！")
+            self.show_dialog("Registration successful!")
             self.register_success.emit()  # 发出注册成功的信号
             self.accept()  # 关闭对话框并返回成功状态
         else:
-            self.show_dialog("注册失败！用户名或邮箱已被使用！")
+            self.show_dialog("Registration failed! Username or email address has been used!")
 
 
 if __name__ == '__main__':

@@ -1,16 +1,16 @@
-# threads.py
+# utils/threads.py
 import time
 from PySide6.QtCore import Signal, QThread
-from utils.database import Database
+from utils.database import * # Assuming Database, DB_HOST etc. are here or imported
 
 
 class Worker(QThread):
     login_success = Signal(dict)
     login_failed = Signal(str)
+    admin_login_success = Signal(str) # New signal for admin login
     do_something_success = Signal(object)
     do_something_failed = Signal(str)
 
-    # 使用类变量共享单一数据库实例
     _db = None
     _db_ref_count = 0
 
@@ -19,9 +19,8 @@ class Worker(QThread):
         self.action = None
         self.action_args = None
 
-        # 初始化共享数据库实例
         if Worker._db is None:
-            Worker._db = Database()
+            Worker._db = Database(DB_HOST, DB_NAME, DB_USER, DB_PASSWORD)
         Worker._db_ref_count += 1
 
     def set_action(self, action, action_args):
@@ -34,43 +33,55 @@ class Worker(QThread):
             'do_something': self.do_something,
         }
         try:
-            action_dict[self.action](self.action_args)
-        except KeyError:
-            raise Exception('不存在的操作')
+            if self.action in action_dict:
+                action_dict[self.action](self.action_args)
+            else:
+                self.do_something_failed.emit(f'Unknown action: {self.action}')
+        except Exception as e:
+            self.do_something_failed.emit(f'Error in worker thread for action {self.action}: {str(e)}')
+
 
     def login(self, args):
         try:
             username = args['username'].strip()
             password = args['password'].strip()
 
+            # Admin Check
+            if username == 'admin' and password == '888888':
+                time.sleep(0.5) # Simulate check
+                self.admin_login_success.emit(username) # Emit admin success signal
+                return # Stop further processing for admin login
+
+            # Existing user login logic
             user_data = Worker._db.check_login(username, password)
 
             if user_data:
                 user_info = {
-                    'username': user_data[0],
-                    'password': user_data[1],
-                    'mail': user_data[2],
-                    'age': user_data[3],
-                    'weight': user_data[4],
-                    'training_days': user_data[5],
-                    'training_time': user_data[6],
-                    'level': user_data[7],
-                    'points': user_data[8],
+                    'id': user_data[0],
+                    'username': user_data[1],
+                    'password': user_data[2],
+                    'mail': user_data[3],
+                    'age': user_data[4],
+                    'weight': user_data[5],
+                    'training_days': user_data[6],
+                    'training_time': user_data[7],
+                    'level': user_data[8],
+                    'points': user_data[9],
                 }
-                time.sleep(1)  # 模拟网络延迟
+                time.sleep(1)
                 self.login_success.emit(user_info)
             else:
-                self.login_failed.emit('用户名或密码错误！')
+                self.login_failed.emit('Wrong username or password!')
 
         except Exception as e:
-            self.login_failed.emit(f'登录失败：{str(e)}')
+            self.login_failed.emit(f'Login Failed: {str(e)}')
 
     def do_something(self, args):
         try:
             time.sleep(3)
-            self.do_something_success.emit({'result': '操作成功'})
+            self.do_something_success.emit({'result': 'Generic operation successful'})
         except Exception as e:
-            self.do_something_failed.emit('操作失败，请检查网络！')
+            self.do_something_failed.emit(f'Operation failed: {str(e)}')
 
     def __del__(self):
         Worker._db_ref_count -= 1

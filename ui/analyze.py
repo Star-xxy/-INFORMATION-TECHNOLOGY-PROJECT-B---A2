@@ -543,7 +543,7 @@ class Ui_Frame(object):
         self.ToolButton.setText(QCoreApplication.translate("Frame", u"Image", None))
         self.ToolButton_2.setText(QCoreApplication.translate("Frame", u"Video", None))
         self.ToolButton_3.setText(QCoreApplication.translate("Frame", u"Camera", None))
-        self.PrimaryToolButton.setText(QCoreApplication.translate("Frame", u"\u68c0\u6d4b", None))
+        self.PrimaryToolButton.setText(QCoreApplication.translate("Frame", "Detect", None))
         self.SubtitleLabel.setText(QCoreApplication.translate("Frame", u"Correct posture", None))
         self.BodyLabel_12.setText(QCoreApplication.translate("Frame", u"The Anjaneyasana (Low Lunge Pose) requires the front leg to be bent with the knee above the ankle, the back leg to be extended straight with the back knee close to the ground, the hips facing forward, the spine in a neutral position, the hands can be placed on the ground or raised overhead, and the chest opened.", None))
         self.SubtitleLabel_2.setText(QCoreApplication.translate("Frame", u"User's posture", None))

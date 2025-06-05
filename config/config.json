@@ -9,8 +9,8 @@
         "save_path": "E:/Python/Projects/yolo/YOLO_GUI/save_dir"
     },
     "User": {
-        "password": "",
-        "user": ""
+        "password": "888888",
+        "user": "admin"
     },
     "MainWindow": {
         "save_password": true
