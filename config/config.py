@@ -21,10 +21,6 @@ class Config(QConfig):
 
 
 YEAR = datetime.datetime.now().year
-AUTHOR = "Zhongming"
-VERSION = '0.3'
-FEEDBACK_URL = "https://blog.csdn.net/Python_zzm"
-
 cfg = Config()
 cfg.themeMode.value = Theme.LIGHT
 qconfig.load('config/config.json', cfg)
